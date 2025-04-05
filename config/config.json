@@ -1,0 +1,10 @@
+{
+    "CSV_FILE" : "green_tripdata_2023-01.csv",
+    "WEATHER_API_KEY" : "d81a114871a599d9c7dc0f70954c314f",
+    "WEATHER_URL" : "http://api.openweathermap.org/data/2.5/weather",
+    "REALTIME_CONGESTION_API" : "http://localhost:5000/api/congestion?zone:",
+    "GOOGLE_SHEET_NAME" : "Zone Metadata",
+    "MONGO_URI" : "mongodb+srv://ismail:Windows12@cluster0.ox33b.mongodb.net/",
+    "DB_NAME" : "mobility",
+    "COLLECTION_NAME" : "cleaned_trip_data"
+}
