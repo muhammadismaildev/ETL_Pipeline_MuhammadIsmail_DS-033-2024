@@ -1,0 +1,9 @@
+pandas
+requests
+pytz
+gspread
+oauth2client
+schedule
+pymongo
+flake8
+pytest
