@@ -1,0 +1,69 @@
+# .github/workflows/ci_cd.yml
+
+# Name of the workflow displayed on GitHub Actions tab
+name: Python ETL CI Pipeline
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events but only for the main branch
+  push:
+    branches: [ main ]
+  # Triggers the workflow on pull request events but only for the main branch
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This job performs linting and testing
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Step 1: Check out the repository code under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Use the latest version
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4 # Use the latest version
+        with:
+          python-version: '3.12' # Specify the Python version you use
+
+      # Step 3: Install dependencies
+      # It's recommended to include linters and test runners in requirements.txt
+      # or install them explicitly here.
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          # Install flake8 and pytest if they are not in requirements.txt
+          pip install flake8 pytest
+        # Consider adding caching for dependencies here using actions/cache for faster builds
+
+      # Step 4: Lint code with flake8
+      # Stop the build if there are Python syntax errors or undefined names
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      # Step 5: Run tests with pytest
+      # This step assumes you have tests located in a standard directory (like 'tests/')
+      # and that your tests are written using the pytest framework.
+      # IMPORTANT: You need to write the actual test files for this step to be useful.
+      # NOTE: This basic setup does NOT handle database connections, API keys, or
+      # Google credentials needed by the main script. Real integration tests
+      # would require mocking these services or setting up test instances
+      # and securely providing credentials via GitHub Secrets.
+      - name: Test with pytest
+        run: |
+          pytest
+          # Add options if needed, e.g., pytest -v tests/
+

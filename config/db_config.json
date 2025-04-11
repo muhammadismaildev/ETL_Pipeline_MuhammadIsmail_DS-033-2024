@@ -1,0 +1,14 @@
+{
+    "postgres": {
+        "host": "localhost",
+        "database": "financial_data",
+        "user": "postgres",
+        "password": "postgres",
+        "port": "5432"
+    },
+    "mongodb": {
+        "host": "localhost",
+        "port": 27017,
+        "db": "financial_news"
+    }
+}
